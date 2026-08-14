@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>ReadMe — add a read</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400&family=Jost:ital,wght@0,300;0,400;0,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+  <style>
+    .add-wrap { max-width: 640px; margin: 0 auto; padding: 56px 24px 88px; }
+    .add-wrap h1 {
+      font-family: "Cormorant", serif; font-weight: 500; font-size: 56px;
+      letter-spacing: 0.04em; margin: 18px 0 6px;
+    }
+    .add-sub { margin-bottom: 34px; }
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 7px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%; background: var(--panel); border: 1.5px solid var(--line); border-radius: 4px;
+      color: var(--ink); font-family: "Space Mono", monospace; font-size: 14px; padding: 10px 12px;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--ink); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn {
+      font-family: "Jost", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; background: var(--ink); color: var(--paper);
+      border: 1.5px solid var(--ink); border-radius: 999px;
+      padding: 11px 26px; cursor: pointer; margin-top: 8px; transition: all 0.15s ease;
+    }
+    .btn:hover { background: transparent; color: var(--ink); }
+    .out { margin-top: 28px; display: none; }
+    .out.show { display: block; }
+    .out pre {
+      background: var(--panel); border: 1.5px solid var(--line); border-radius: 4px;
+      padding: 16px; font-size: 12px; overflow-x: auto; color: var(--ink);
+      font-family: "Space Mono", monospace; line-height: 1.5;
+    }
+    .out .hint { margin-top: 12px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="add-wrap">
+    <a class="anno" href="index.html">(← back to the room)</a>
+    <h1>ADD A READ</h1>
+    <p class="add-sub anno">(fill this in, copy the entry, paste it at the top of the list in reads.js)</p>
+
+    <div class="field"><label for="f-title">Title</label><input id="f-title" placeholder="What's it called?"></div>
+    <div class="field"><label for="f-by">By</label><input id="f-by" placeholder="Author, host, or publication"></div>
+    <div class="row">
+      <div class="field"><label for="f-type">Type</label>
+        <select id="f-type">
+          <option value="book">book</option>
+          <option value="article">article</option>
+          <option value="substack">substack</option>
+          <option value="podcast">podcast</option>
+          <option value="essay">essay</option>
+          <option value="video">video</option>
+          <option value="paper">paper</option>
+        </select>
+      </div>
+      <div class="field"><label for="f-status">Status</label>
+        <select id="f-status">
+          <option value="queue">queue — want to read</option>
+          <option value="now">now — currently reading</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label for="f-link">Link (optional)</label><input id="f-link" placeholder="https://…"></div>
+    <div class="field"><label for="f-cover">Cover image URL (optional)</label><input id="f-cover" placeholder="https://covers.openlibrary.org/b/isbn/<ISBN>-M.jpg"></div>
+    <div class="field"><label for="f-why">Why it earned a spot</label><textarea id="f-why" rows="2" placeholder="One honest line."></textarea></div>
+
+    <button class="btn" id="generate">Generate entry</button>
+
+    <div class="out" id="out">
+      <pre id="out-code"></pre>
+      <button class="btn" id="copy">Copy to clipboard</button>
+      <span class="hint anno">(now paste it right after "const READS = [" in reads.js)</span>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    $("generate").addEventListener("click", () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const why = $("f-why").value.trim();
+      const entry = {
+        title: $("f-title").value.trim(),
+        by: $("f-by").value.trim(),
+        type: $("f-type").value,
+        status: $("f-status").value,
+        link: $("f-link").value.trim(),
+        cover: $("f-cover").value.trim(),
+        why: why ? `(${why.replace(/^\(|\)$/g, "")})` : "",
+        added: today,
+        finished: "",
+        rating: 0,
+        retelling: "",
+        quotes: []
+      };
+      $("out-code").textContent = JSON.stringify(entry, null, 2) + ",";
+      $("out").classList.add("show");
+    });
+    $("copy").addEventListener("click", async () => {
+      await navigator.clipboard.writeText($("out-code").textContent);
+      $("copy").textContent = "Copied ✓";
+      setTimeout(() => ($("copy").textContent = "Copy to clipboard"), 1500);
+    });
+  </script>
+</body>
+</html>

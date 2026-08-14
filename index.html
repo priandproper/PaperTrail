@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>ReadMe — a reading room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="corner corner-tl anno">(est. 2026)</div>
+    <div class="corner corner-tr anno">(a reading room for one)</div>
+
+    <p class="pill masthead-pill">VOL. 1 — CURRENTLY FEEDING MY BRAIN</p>
+    <h1 class="wordmark">READ&nbsp;ME<span class="asterisk">*</span></h1>
+    <p class="tagline anno">(*a public record of what i'm feeding my brain)</p>
+
+    <nav class="nav">
+      <a class="pill c-green" href="#now">now</a>
+      <a class="pill c-cobalt" href="#queue">the queue</a>
+      <a class="pill c-red" href="#retold">rewired</a>
+      <a class="pill c-gold" href="#why">why</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="now" class="section c-green">
+      <div class="section-head">
+        <div class="head-row">
+          <span class="pill">SECTION: NOW</span>
+          <span class="anno">(01)</span>
+        </div>
+        <h2>NOW</h2>
+        <p class="section-sub">ON THE NIGHTSTAND · IN THE EARS · ON THE MIND</p>
+      </div>
+      <div id="now-cards" class="cards"></div>
+    </section>
+
+    <section id="queue" class="section c-cobalt">
+      <div class="section-head">
+        <div class="head-row">
+          <span class="pill">SECTION: THE QUEUE</span>
+          <span class="anno">(02)</span>
+        </div>
+        <h2>THE QUEUE</h2>
+        <p class="section-sub">EVERYTHING THAT EARNED A SPOT, AND WHY</p>
+      </div>
+      <div id="filters" class="filters" role="group" aria-label="Filter by type"></div>
+      <div id="queue-cards" class="cards"></div>
+    </section>
+
+    <section id="retold" class="section c-red">
+      <div class="section-head">
+        <div class="head-row">
+          <span class="pill">SECTION: REWIRED</span>
+          <span class="anno">(03)</span>
+        </div>
+        <h2>WHAT IT DID TO MY MIND</h2>
+        <p class="section-sub">FINISHED, THEN EXPLAINED IN MY OWN WORDS</p>
+      </div>
+      <div id="retold-cards" class="cards cards-wide"></div>
+    </section>
+
+    <section id="why" class="section colophon c-gold">
+      <div class="section-head">
+        <div class="head-row">
+          <span class="pill">SECTION: WHY</span>
+          <span class="anno">(04)</span>
+        </div>
+        <h2>WHY THIS EXISTS</h2>
+      </div>
+      <p>
+        This is an avid reader's ledger — novels, essays, Substacks, podcasts, papers,
+        anything worth the neurons. Everything that enters my head gets logged, and
+        everything I finish gets <em>explained back in my own words</em>, because a
+        thing you can't explain is a thing you didn't really read.
+      </p>
+      <p class="anno colophon-kicker">(new pathways, on purpose.)</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span class="anno">(built by hand)</span>
+    <span class="anno">(fed daily)</span>
+    <a class="anno" href="add.html">(add a read)</a>
+  </footer>
+
+  <script src="reads.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
