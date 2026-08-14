@@ -220,13 +220,10 @@ a.anno:hover { text-decoration: underline; }
 }
 
 .pill-type { font-size: 11px; padding: 4px 12px; }
-.type-book     { color: var(--ink); }
-.type-article  { color: #3d6b35; border-color: #3d6b3577; }
-.type-substack { color: #a05f16; border-color: #a05f1677; }
-.type-podcast  { color: var(--red); border-color: #c2401f77; }
-.type-essay    { color: var(--cobalt); border-color: #2743c777; }
-.type-video    { color: #6b3576; border-color: #6b357677; }
-.type-paper    { color: #74542a; border-color: #74542a77; }
+.type-book    { color: var(--ink); }
+.type-essay   { color: var(--cobalt); border-color: #2743c777; }
+.type-podcast { color: var(--red); border-color: #c2401f77; }
+.type-video   { color: #6b3576; border-color: #6b357677; }
 
 .card-body { display: flex; gap: 18px; align-items: flex-start; }
 

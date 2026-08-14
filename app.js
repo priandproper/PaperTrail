@@ -2,12 +2,9 @@
 
 const TYPE_LABELS = {
   book: "book",
-  article: "article",
-  substack: "substack",
-  podcast: "podcast",
   essay: "essay",
+  podcast: "podcast",
   video: "video",
-  paper: "paper",
 };
 
 let activeFilter = "all";

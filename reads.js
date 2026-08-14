@@ -4,7 +4,7 @@
 //  generate one). Fields:
 //    title    — what it's called
 //    by       — author / host / publication
-//    type     — "book" | "article" | "substack" | "podcast" | "essay" | "video" | "paper"
+//    type     — "book" | "essay" (any short read) | "podcast" | "video"
 //    status   — "queue" (want to read) | "now" (currently reading) | "done" (finished)
 //    link     — optional URL ("" if none)
 //    cover    — optional cover image URL ("" if none).
@@ -67,7 +67,7 @@ const READS = [
   {
     title: "Looking for Alice",
     by: "Henrik Karlsson",
-    type: "substack",
+    type: "essay",
     status: "queue",
     link: "https://www.henrikkarlsson.xyz/p/looking-for-alice",
     cover: "",
@@ -81,7 +81,7 @@ const READS = [
   {
     title: "You Might Be a Late Bloomer",
     by: "David Brooks · The Atlantic",
-    type: "article",
+    type: "essay",
     status: "queue",
     link: "https://www.theatlantic.com/ideas/archive/2024/06/successs-late-bloomers-motivation/678798/",
     cover: "",
