@@ -66,6 +66,10 @@
         <p class="section-sub">FINISHED, THEN EXPLAINED IN MY OWN WORDS</p>
       </div>
       <div id="retold-cards" class="cards cards-wide"></div>
+      <div id="shelf-wrap" hidden>
+        <p class="anno shelf-label">(the shelf — everything that made it through)</p>
+        <div id="shelf" class="shelf"></div>
+      </div>
     </section>
 
     <section id="why" class="section colophon c-gold">
@@ -92,6 +96,29 @@
     <span class="anno">(fed daily)</span>
     <a class="anno" href="add.html">(add a read)</a>
   </footer>
+
+  <div id="finish-overlay" class="overlay" hidden>
+    <div class="finish-modal">
+      <div class="modal-top">
+        <span class="pill finish-pill">FINISHED</span>
+        <button class="anno modal-close" id="finish-close">(close)</button>
+      </div>
+      <h3 id="finish-title" class="finish-title"></h3>
+      <p class="anno finish-prompt">(be honest — what did it do to your mind?)</p>
+      <div class="stars-picker" id="star-picker" aria-label="Rating"></div>
+      <textarea id="finish-retelling" rows="5" placeholder="Explain it like you would to a friend at dinner — what it actually says, whether you buy it, what it changed."></textarea>
+      <input id="finish-quote" placeholder="One line worth keeping (optional)">
+      <button class="btn-ink" id="finish-generate">generate my entry</button>
+      <div id="finish-out" hidden>
+        <pre id="finish-code"></pre>
+        <div class="finish-actions">
+          <button class="btn-ink" id="finish-copy">copy entry</button>
+          <a class="btn-ink btn-ghost" href="https://github.com/priandproper/ReadMe/edit/main/reads.js" target="_blank" rel="noopener">open the ledger on github</a>
+        </div>
+        <p class="anno finish-hint">(paste it over this book's old entry in reads.js, commit — the site rebuilds itself in a minute)</p>
+      </div>
+    </div>
+  </div>
 
   <script src="reads.js"></script>
   <script src="app.js"></script>

@@ -70,6 +70,20 @@ function card(r, annoText) {
   </article>`;
 }
 
+function nowCard(r) {
+  const idx = READS.indexOf(r);
+  return `<article class="card">
+    <div class="card-top">
+      ${typePill(r.type)}
+      <span class="anno">(started ${esc(prettyDate(r.added))})</span>
+    </div>
+    ${cardBody(r)}
+    <div class="card-actions">
+      <button class="btn-finish" data-idx="${idx}">i finished this →</button>
+    </div>
+  </article>`;
+}
+
 function doneCard(r) {
   const quotes = (r.quotes || [])
     .map((q) => `<p class="quote">“${esc(q)}”</p>`)
@@ -100,7 +114,7 @@ function emptyState(text) {
 function renderNow() {
   const items = READS.filter((r) => r.status === "now");
   document.getElementById("now-cards").innerHTML = items.length
-    ? items.map((r) => card(r, `started ${prettyDate(r.added)}`)).join("")
+    ? items.map(nowCard).join("")
     : emptyState("nothing in progress — the nightstand is bare, fix that");
 }
 
@@ -120,7 +134,102 @@ function renderRetold() {
   document.getElementById("retold-cards").innerHTML = items.length
     ? items.map(doneCard).join("")
     : emptyState("nothing retold yet — finish something, then tell me about it");
+  renderShelf(items);
 }
+
+function renderShelf(doneItems) {
+  const wrap = document.getElementById("shelf-wrap");
+  if (!doneItems.length) {
+    wrap.hidden = true;
+    return;
+  }
+  wrap.hidden = false;
+  document.getElementById("shelf").innerHTML = doneItems
+    .map((r) =>
+      r.cover
+        ? `<img class="shelf-cover" src="${esc(r.cover)}" alt="${esc(r.title)}" title="${esc(r.title)}" loading="lazy" onerror="this.remove()">`
+        : `<span class="shelf-spine" title="${esc(r.title)}">${esc(r.title)}</span>`
+    )
+    .join("");
+}
+
+/* ---------- the finish flow ---------- */
+
+function localToday() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+let finishIdx = -1;
+let finishRating = 0;
+
+function renderStars() {
+  const el = document.getElementById("star-picker");
+  let html = "";
+  for (let i = 1; i <= 5; i++) {
+    let glyph = "☆";
+    if (finishRating >= i) glyph = "★";
+    else if (finishRating === i - 0.5) glyph = "½";
+    html += `<button type="button" data-star="${i}" class="${finishRating >= i - 0.5 ? "lit" : ""}">${glyph}</button>`;
+  }
+  el.innerHTML = html;
+  el.querySelectorAll("button").forEach((b) =>
+    b.addEventListener("click", () => {
+      const i = +b.dataset.star;
+      finishRating = finishRating === i ? i - 0.5 : i;
+      renderStars();
+    })
+  );
+}
+
+function openFinish(idx) {
+  finishIdx = idx;
+  finishRating = 0;
+  document.getElementById("finish-title").textContent = READS[idx].title.toUpperCase();
+  document.getElementById("finish-retelling").value = "";
+  document.getElementById("finish-quote").value = "";
+  document.getElementById("finish-out").hidden = true;
+  renderStars();
+  document.getElementById("finish-overlay").hidden = false;
+}
+
+function closeFinish() {
+  document.getElementById("finish-overlay").hidden = true;
+}
+
+document.getElementById("now-cards").addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-finish");
+  if (btn) openFinish(+btn.dataset.idx);
+});
+
+document.getElementById("finish-close").addEventListener("click", closeFinish);
+document.getElementById("finish-overlay").addEventListener("click", (e) => {
+  if (e.target.id === "finish-overlay") closeFinish();
+});
+
+document.getElementById("finish-generate").addEventListener("click", () => {
+  const r = READS[finishIdx];
+  if (!r) return;
+  const retelling = document.getElementById("finish-retelling").value.trim();
+  const quote = document.getElementById("finish-quote").value.trim();
+  const updated = {
+    ...r,
+    status: "done",
+    finished: localToday(),
+    rating: finishRating,
+    retelling,
+    quotes: quote ? [...(r.quotes || []), quote] : r.quotes || [],
+  };
+  document.getElementById("finish-code").textContent = JSON.stringify(updated, null, 2) + ",";
+  document.getElementById("finish-out").hidden = false;
+});
+
+document.getElementById("finish-copy").addEventListener("click", async () => {
+  await navigator.clipboard.writeText(document.getElementById("finish-code").textContent);
+  const b = document.getElementById("finish-copy");
+  b.textContent = "copied ✓";
+  setTimeout(() => (b.textContent = "copy entry"), 1500);
+});
 
 function renderFilters() {
   const typesInQueue = [...new Set(READS.filter((r) => r.status === "queue").map((r) => r.type))];
