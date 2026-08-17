@@ -1,4 +1,4 @@
-// ReadMe — render the ledger
+// PaperTrail — render the ledger
 
 const TYPE_LABELS = {
   book: "book",

@@ -1,4 +1,4 @@
-/* ReadMe — editorial scrapbook: cream paper, grid lines, big serif caps,
+/* PaperTrail — editorial scrapbook: cream paper, grid lines, big serif caps,
    mono annotations, pill labels, collaged covers */
 
 :root {
@@ -84,7 +84,7 @@ a.anno:hover { text-decoration: underline; }
 .wordmark {
   font-family: "Cormorant", serif;
   font-weight: 500;
-  font-size: clamp(68px, 13vw, 150px);
+  font-size: clamp(44px, 11vw, 130px);
   line-height: 0.95;
   letter-spacing: 0.05em;
   color: var(--ink);

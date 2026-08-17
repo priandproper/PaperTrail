@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-//  ReadMe — the ledger.
+//  PaperTrail — the ledger.
 //  Add new entries at the TOP of the list (or use add.html to
 //  generate one). Fields:
 //    title    — what it's called
